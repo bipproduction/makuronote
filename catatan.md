@@ -1,4 +1,5 @@
 # catatan project
+- https://meet.google.com/fgs-gufp-kjn
 
 1. runtype ( jenis data yang berbeda. )
     - tidak konsisten pada response data , parameter success tidak selalu ada disetiap response, yang bisa digunakan sebagai detektor parameter keberhasilan atau kegagalan serponse , malahan menghasilkan null
