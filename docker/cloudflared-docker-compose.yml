@@ -1,0 +1,54 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    restart: unless-stopped
+    volumes:
+      - ./cloudflared:/root/.cloudflared
+    networks:
+      - cloudflared-network
+
+  app1:
+    image: oven/bun:debian
+    container_name: app1
+    restart: unless-stopped
+    volumes:
+      - ./apps/app:/app
+    working_dir: /app
+    command: bun run src/index.ts
+    environment:
+      - PORT=3000
+    networks:
+      - cloudflared-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    volumes:
+      - grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=Makuro_123
+    restart: unless-stopped
+    networks:
+      - cloudflared-network
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - cloudflared-network
+
+volumes:
+  grafana:
+  caddy_data:
+  caddy_config:
+
+networks:
+  cloudflared-network:
+    external: true
