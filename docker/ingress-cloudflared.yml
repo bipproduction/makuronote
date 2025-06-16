@@ -1,0 +1,37 @@
+tunnel: wibu-tunnel
+credentials-file: /Users/bip/.cloudflared/80913254-3d29-4c77-a499-243d4cabc34b.json
+
+ingress:
+  - hostname: dev.wibudev.com
+    service: http://192.168.1.247:3000
+  - hostname: bagas.wibudev.com
+    service: http://192.168.1.240:3000
+  - hostname: amal.wibudev.com
+    service: http://192.168.1.243:3000
+  - hostname: ssh.wibudev.com
+    service: ssh://localhost:22
+  - hostname: ai.wibudev.com
+    service: http://localhost:11434
+  - hostname: qdrant.wibudev.com
+    service: http://localhost:6333
+  - hostname: search.wibudev.com
+    service: http://localhost:5001
+  - hostname: n8n.wibudev.com
+    service: http://localhost:5678
+  - hostname: seafile.wibudev.com
+    service: http://localhost:8800
+    originRequest:
+      noTLSVerify: true
+      httpHostHeader: seafile.wibudev.com
+      headers:
+        X-Forwarded-Proto: https
+  - hostname: minio.wibudev.com
+    service: http://localhost:9001
+  - hostname: minio-api.wibudev.com
+    service: http://localhost:9000
+  - hostname: local.wibudev.com
+    service: http://localhost:8765
+  - hostname: "*.wibudev.com"
+    service: http://localhost:8765
+  - service: http_status:404
+
