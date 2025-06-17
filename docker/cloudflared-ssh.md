@@ -117,6 +117,32 @@ Host ssh-tunnel1
 ssh sshtunnel1
 ```
 
+### akses host dari container
+
+jalankan app
+
+```bash
+bun run dev --port 3000 --host 0.0.0.0
+```
+
+```bash
+➜ Network:  http://192.168.1.247:3000/
+```
+
+atau 
+
+
+```bash
+(base) bips-MacBook-Air:cloudflared bip$ ifconfig
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=6463<RXCSUM,TXCSUM,TSO4,TSO6,CHANNEL_IO,PARTIAL_CSUM,ZEROINVERT_CSUM>
+	ether c0:95:6d:3f:e3:1a 
+	inet6 fe80::4fa:90e3:7add:9269%en0 prefixlen 64 secured scopeid 0xb 
+	inet 192.168.1.247 netmask 0xffffff00 broadcast 192.168.1.255
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect
+	status: active
+```
 
 
 
