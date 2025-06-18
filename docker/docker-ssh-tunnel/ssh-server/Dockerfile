@@ -13,7 +13,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     ca-certificates openssh-server sudo nano unzip \
     && mkdir -p /var/run/sshd \
     && useradd -m -s /bin/bash devuser \
-    && echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && groupadd -g 1001 appgroup && \
+    usermod -aG appgroup devuser && \
+    echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Switch to devuser for installations
@@ -51,7 +53,7 @@ RUN mkdir -p /etc/ssh/keys && \
 
 # Working directory
 WORKDIR /apps
-RUN chown -R devuser:devuser /apps && chmod -R 775 /apps
+RUN chown -R devuser:appgroup /apps && chmod -R 775 /apps && chmod +t /apps
 
 # Healthcheck for SSH
 HEALTHCHECK --interval=30s --timeout=3s CMD pgrep sshd || exit 1
