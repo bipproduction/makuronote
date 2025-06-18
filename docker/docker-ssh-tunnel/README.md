@@ -16,6 +16,17 @@ Host ssh-tunnel1
   ProxyCommand cloudflared access ssh --hostname %h
 ```
 
+dengan custom id_rsa
+
+```txt
+Host bip-office1
+  HostName bip-office1.wibudev.com
+  User devuser
+  Port 22
+  ProxyCommand cloudflared access ssh --hostname %h
+  IdentityFile ~/.ssh/id_rsa_bip_office1
+```
+
 .env
 
 ```ini
