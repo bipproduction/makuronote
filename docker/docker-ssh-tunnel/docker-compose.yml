@@ -1,0 +1,35 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    restart: always
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - cloudflared-network
+
+  ssh-server:
+    build:
+      context: ./ssh-server
+      args:
+        SSH_PUBLIC_KEY: ${SSH_PUBLIC_KEY}
+    image: ssh-server:v1
+    container_name: ssh-server
+    restart: always
+    volumes:
+      - ./apps:/apps
+      - ./ssh-keys:/etc/ssh/keys
+    environment:
+      - TZ=Asia/Makassar
+    depends_on:
+      - cloudflared
+    networks:
+      - cloudflared-network
+networks:
+  cloudflared-network:
+    driver: bridge
+
