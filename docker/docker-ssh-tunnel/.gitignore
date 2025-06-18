@@ -1,0 +1,11 @@
+.env 
+
+node_modules/ 
+
+cloudflared/ 
+
+apps/
+
+node_modules/ 
+
+\*.log
