@@ -75,9 +75,6 @@ services:
       - ./apps:/apps
     networks:
       - cloudflared-network
-volumes:
-  cloudflared:
-  ssh-config:
 
 networks:
   cloudflared-network:
