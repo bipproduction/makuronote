@@ -78,7 +78,7 @@ services:
 
 networks:
   cloudflared-network:
-    external: true
+    driver: bridge
 ```
 
 
