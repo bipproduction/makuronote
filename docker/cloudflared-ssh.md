@@ -59,13 +59,13 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
 
   ssh-server:
-    image: lscr.io/linuxserver/openssh-server:latest
+    image: linuxserver/openssh-server:latest
     container_name: ssh-server
     restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Asia/Jakarta
+      - TZ=Asia/Makasar
       - PUBLIC_KEY=${SSH_PUBLIC_KEY}
       - USER_NAME=makuro
       - TCP_PORTS=22
