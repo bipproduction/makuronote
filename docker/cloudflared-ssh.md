@@ -141,6 +141,10 @@ en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 	status: active
 ```
 
+### login ke Host
 
+```bash
+ssh bip@host.docker.internal -p 22
+```
 
 
