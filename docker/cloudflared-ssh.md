@@ -77,7 +77,6 @@ services:
       - SUDO_ACCESS=false
     volumes:
       - ./ssh-config:/config
-      - ./apps:/apps
     networks:
       - cloudflared-network
     healthcheck:
