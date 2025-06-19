@@ -37,7 +37,6 @@ docker network create cloudflared-network
 
 ```ini
 CLOUDFLARE_TUNNEL_TOKEN=eyJhIjoiYzNhMjNkYTVjMTZmY ...
-GRAFANA_ADMIN_PASSWORD=Makuro_123
 SSH_PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABA ...
 ```
 
