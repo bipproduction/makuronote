@@ -88,7 +88,7 @@ services:
 
 networks:
   cloudflared-network:
-    driver: bridge
+    external: true
 ```
 
 
