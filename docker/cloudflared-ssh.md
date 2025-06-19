@@ -57,6 +57,12 @@ services:
       - cloudflared-network
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"] # Checks if cloudflared is responsive
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   ssh-server:
     image: linuxserver/openssh-server:latest
@@ -75,6 +81,12 @@ services:
       - ./apps:/apps
     networks:
       - cloudflared-network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "22"] # Checks if SSH server is listening on port 22
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
 networks:
   cloudflared-network:
