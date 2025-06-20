@@ -157,4 +157,68 @@ en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ssh bip@host.docker.internal -p 22
 ```
 
+### custom port 22
+
+```yml
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    restart: unless-stopped
+    volumes:
+      - ./cloudflared:/root/.cloudflared
+    networks:
+      - cloudflared-network
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"] 
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  ssh-server:
+    image: linuxserver/openssh-server:latest
+    container_name: ssh-server
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Makassar
+      - PUBLIC_KEY=${SSH_PUBLIC_KEY}
+      - USER_NAME=makuro
+      - SUDO_ACCESS=false
+      - LISTEN_PORT=22  # Ini akan membuat SSH listen di port 22
+    volumes:
+      - ./ssh-config:/config
+    networks:
+      - cloudflared-network
+    ports:
+      - "2222:22"  # Host port 2222 -> Container port 22
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "22"] 
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  cloudflared-network:
+    external: true
+```
+
+### akses Host
+
+```bash
+# Cek status SSH
+sudo systemsetup -getremotelogin
+
+# Aktifkan SSH jika belum aktif
+sudo systemsetup -setremotelogin on
+
+# Atau melalui System Preferences
+# System Preferences > Sharing > Remote Login
+```
 
