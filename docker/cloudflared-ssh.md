@@ -80,7 +80,7 @@ services:
     networks:
       - cloudflared-network
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "22"] # Checks if SSH server is listening on port 22
+      test: ["CMD", "nc", "-z", "localhost", "2222"] # Checks if SSH server is listening on port 22
       interval: 30s
       timeout: 10s
       retries: 3
