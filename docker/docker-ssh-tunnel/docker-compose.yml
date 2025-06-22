@@ -31,5 +31,5 @@ services:
       - cloudflared-network
 networks:
   cloudflared-network:
-    driver: bridge
+    external: true
 
